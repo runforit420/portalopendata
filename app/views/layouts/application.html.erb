@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Portalopendata</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link rel="stylesheet" href="/styles.css">
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/posts">Posts</a></li>
+        <!-- Add more navigation links as needed -->
+      </ul>
+    </nav>
+    <header>
+      <h1>Welcome to the Open Data Portal</h1>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+      <%= yield %>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; <%= Time.now.year %> Open Data Portal. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

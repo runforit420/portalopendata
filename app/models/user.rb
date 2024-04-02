@@ -1,0 +1,22 @@
+# app/models/user.rb
+class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+  has_many :posts
+  has_many :comments
+end
+# app/models/post.rb
+class Post < ApplicationRecord
+  belongs_to :user
+  has_many :comments, dependent: :destroy
+end
+
+# app/models/comment.rb
+class Comment < ApplicationRecord
+  belongs_to :user
+  belongs_to :post
+end
+
+
