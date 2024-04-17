@@ -4,6 +4,10 @@
   <title><%= @post.title %></title>
 </head>
 <body>
+<% if current_user == @post.user %>
+<%= link_to 'Sterge', post_path(@post), method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
+
   <h1><%= @post.title %></h1>
   <p><%= @post.content %></p>
   <%= link_to 'Edit', edit_post_path(@post) %> |
@@ -32,6 +36,10 @@
       <%= form.submit "Add Comment" %>
     </div>
   <% end %>
-  </body>
-</html>
 
+  <h2>Comments</h2>
+  <% @comments.each do |comment| %>
+    <p><strong><%= comment.user.email %>:</strong> <%= comment.content %></p>
+  <% end %>
+</body>
+</html>

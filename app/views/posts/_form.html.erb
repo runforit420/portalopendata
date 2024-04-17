@@ -1,11 +1,10 @@
-
-<%= form_with(model: post, local: true) do |form| %>
-  <% if post.errors.any? %>
+<%= form_with(model: @post, local: true) do |form| %>
+  <% if @post.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
 
       <ul>
-        <% post.errors.full_messages.each do |message| %>
+        <% @post.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -23,6 +22,7 @@
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit "Create Post" %>
   </div>
 <% end %>
+

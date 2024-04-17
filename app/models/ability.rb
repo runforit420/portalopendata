@@ -4,6 +4,16 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+  can :read, :all  # Allow everyone to read all resources
+
+    # Define specific rules based on user roles (if applicable)
+    if user.present?
+      can :manage, Post, user_id: user.id  # User can manage their own posts
+      can :create, Post  # Allow logged-in users to create new posts
+    end
+  end
+end
+  
     # Define abilities for the user here. For example:
     #
     #   return unless user.present?
@@ -30,25 +40,3 @@ class Ability
     # https://github.com/CanCanCommunity/cancancan/blob/develop/docs/define_check_abilities.md
   end
 end
-# app/models/ability.rb
-class Ability
-  include CanCan::Ability
-
-  def initialize(user)
-    user ||= User.new # guest user (not logged in)
-    if user.admin?
-      can :manage, :all
-    elsif user.moderator?
-      can :manage, Post
-      can :destroy, Comment
-    elsif user.user_premium?
-      can :create, Post
-      can :update, Post, user_id: user.id
-      can :destroy, Post, user_id: user.id
-      can :create, Comment
-    else
-      can :read, :all
-    end
-  end
-end
-

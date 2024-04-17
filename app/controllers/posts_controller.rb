@@ -1,12 +1,16 @@
+# app/controllers/posts_controller.rb
+require 'cancancan'
 class PostsController < ApplicationController
+  #include CanCanCan::ControllerHelpers
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  
 
   def index
     @posts = Post.all
   end
 
   def show
-    @comment = Comment.new # Initialize a new comment
+    @comment = Comment.new
     @comments = @post.comments
   end
 
@@ -16,22 +20,25 @@ class PostsController < ApplicationController
 
   def edit
   end
-
-  def create
-  @post = Post.new(post_params)
-
-  respond_to do |format|
-    if @post.save
-      format.html { redirect_to @post, notice: 'Post was successfully created.' }
-      format.json { render :show, status: :created, location: @post }
-      format.turbo_stream { render turbo_stream: turbo_stream.replace(@post, partial: "posts/post", locals: { post: @post }) }
-    else
-      format.html { render :new, status: :unprocessable_entity, locals: { errors: @post.errors.full_messages } }
-      format.json { render json: @post.errors, status: :unprocessable_entity }
-      format.turbo_stream { render turbo_stream: turbo_stream.replace(@post, partial: "posts/form", locals: { post: @post, errors: @post.errors.full_messages }) }
+def create
+  if current_user
+    @post = current_user.posts.build(post_params)
+    respond_to do |format|
+      if @post.save
+        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        format.json { render :show, status: :created, location: @post }
+      else
+        format.html { render :new, status: :unprocessable_entity, locals: { errors: @post.errors.full_messages } }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
+      end
     end
+  else
+    # Tratează cazul în care utilizatorul nu este autentificat
+    # Poți redirecționa către pagina de autentificare sau afișa un mesaj de eroare
   end
 end
+
+ 
   def update
     respond_to do |format|
       if @post.update(post_params)
@@ -44,17 +51,18 @@ end
     end
   end
 
-  def destroy
-    @post.destroy
-    respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+def destroy
+  @post = current_user.posts.find(params[:id]) # Assuming Devise for user authentication
+  @post.destroy
+  redirect_to posts_path, notice: 'Post was successfully deleted.' # Or another path
+end
+
+
 
   def create_comment
     @post = Post.find(params[:post_id])
     @comment = @post.comments.build(comment_params)
+   
 
     if @comment.save
       redirect_to @post, notice: 'Comment was successfully created.'
@@ -76,5 +84,5 @@ end
   def comment_params
     params.require(:comment).permit(:content)
   end
-# Removed commented out styles method
 end
+
