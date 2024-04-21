@@ -1,18 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Posts</title>
+  <title>Postări</title>
 </head>
 <body>
-  <h1>Posts</h1>
+  <br>
+  <h1>Postări</h1>
+  <br>
+  <br>
 
-  <ul>
-    <% @posts.each do |post| %>
-      <li><%= link_to post.title, post %></li>
-    <% end %>
-  </ul>
-
-  <%= link_to 'New Post', new_post_path %>
+  <div class="container">
+    <div class="row justify-content-center">
+      <% @posts.each do |post| %>
+        <div class="col-md-8 mb-4 mx-auto">
+          <div class="card">
+            <div class="card-body">
+              <%= link_to post.title, post, class:"card-title" %>
+              <p class="card-text"><%= post.content %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  
+  <footer>
+    <%= link_to 'New Post', new_post_path, class:"btn btn-primary bg d-grid gap-2 col-6 mx-auto footer fixed-bottom bg-primary" %>
+  </footer>
 </body>
 </html>
-

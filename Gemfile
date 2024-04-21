@@ -27,6 +27,8 @@ gem "stimulus-rails"
 gem "jbuilder"
 gem 'cancancan'
 gem 'devise'
+gem 'leaflet-rails'
+gem 'smarter_csv'
 
 
 # Use Redis adapter to run Action Cable in production

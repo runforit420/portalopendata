@@ -1,8 +1,9 @@
 # app/controllers/posts_controller.rb
 require 'cancancan'
 class PostsController < ApplicationController
+  before_action :set_post, only: [:show]
   #include CanCanCan::ControllerHelpers
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+
   
 
   def index
