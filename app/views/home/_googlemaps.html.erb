@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+/**
+ * @license
+ * Copyright 2023 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * Position the map container to the bottom left corner and give it a fixed size
+ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+gmp-map {
+  position: fixed;
+  bottom: 10px; /* Adjust bottom position as needed */
+  right: 10px; /* Adjust left position as needed */
+  width: 300px; /* Adjust width as needed */
+  height: 300px; /* Adjust height as needed */
+  border: 1px solid #ccc; /* Add border */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
+  border-radius: 5px; /* Add border radius */
+  z-index: 1000; /* Ensure it appears above other content */
+}
+
+/*
+ * Optional: Styles for the content inside the map container
+ */
+gmp-map > * {
+  width: 100%;
+  height: 100%;
+}
+</style>
+</head>
+<body>
+  <% require 'csv' %>
+  <% data = CSV.read('public/monumenteAradRomania.csv', headers: true, header_converters: :symbol) %>
+  <gmp-map center="46.182348004274196, 21.310986166846384" zoom="13" map-id="DEMO_MAP_ID">
+    <% data.each do |row| %>
+      <% lat = row[:latitudine].tr('.', '').tr(',', '.') %>
+      <% lon = row[:longitudine].tr('.', '').tr(',', '.') %>
+      <gmp-advanced-marker position="<%= lat %>,<%= lon %>" title="<%= row[:denumire] %>" gmp-clickable></gmp-advanced-marker>
+    <% end %>
+  </gmp-map>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqHVunHdczYzAyh32R7zUYAknnpBP2oTM&callback=initMap&libraries=marker&v=beta&solution_channel=GMP_CCS_infowindows_v2" defer></script>
+</body>
+</html>
+
+
+
