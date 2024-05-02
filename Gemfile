@@ -29,6 +29,7 @@ gem 'cancancan'
 gem 'devise'
 gem 'leaflet-rails'
 gem 'smarter_csv'
+gem 'importmap-rails'
 
 
 # Use Redis adapter to run Action Cable in production

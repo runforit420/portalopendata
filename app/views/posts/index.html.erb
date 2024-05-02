@@ -15,8 +15,15 @@
         <div class="col-md-8 mb-4 mx-auto">
           <div class="card">
             <div class="card-body">
-              <%= link_to post.title, post, class:"card-title" %>
+            <h5 class="card-title">Postarea lui: <%= link_to post.user.email, user_path(post.user) %></h5>
+              <%= link_to post.title, post, class: "card-title" %>
               <p class="card-text"><%= post.content %></p>
+              <p class="card-text"><%= pluralize(post.comments.count, 'comment') %></p>
+              <ul>
+                <% post.comments.each do |comment| %>
+                  <li>  <%= comment.user.email %>  a spus  "<%=comment.content %>" </li>
+                <% end %>
+              </ul>
             </div>
           </div>
         </div>
@@ -25,7 +32,9 @@
   </div>
   
   <footer>
-    <%= link_to 'New Post', new_post_path, class:"btn btn-primary bg d-grid gap-2 col-6 mx-auto footer fixed-bottom bg-primary" %>
+    <%= link_to 'New Post', new_post_path, class: "btn btn-primary bg d-grid gap-2 col-6 mx-auto footer fixed-bottom bg-primary" %>
   </footer>
+</body>
+</html>
 </body>
 </html>

@@ -1,3 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Log in</title>
+  <style>
+    body {
+      background: url(/rain.gif) no-repeat center center fixed; 
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
+  </style>
 <h2>Resend confirmation instructions</h2>
 
 <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>

@@ -1,7 +1,7 @@
 # app/controllers/posts_controller.rb
 require 'cancancan'
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show]
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
   #include CanCanCan::ControllerHelpers
 
   
@@ -71,7 +71,14 @@ end
       redirect_to @post, alert: 'Failed to create comment.'
     end
   end
-
+  
+  def destroy
+    @post.destroy
+    respond_to do |format|
+      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
   private
 
   def set_post
@@ -83,7 +90,6 @@ end
   end
 
   def comment_params
-    params.require(:comment).permit(:content)
+    params.require(:comment).permit(:title, :content)
   end
 end
-
