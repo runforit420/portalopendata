@@ -1,0 +1,24 @@
+<!-- app/views/users/dashboard.html.erb -->
+<h1>Panou de control</h1>
+
+<p>Bine ai venit, <%= @user.email %>!</p>
+
+<h2>Actualizați-vă adresa de e-mail</h2>
+<%= form_for @user, url: user_registration_path, html: { method: :put } do |f| %>
+  <%= f.label :email %>
+  <%= f.email_field :email %>
+  <%= f.submit "Update Email" %>
+<% end %>
+
+<h2>Actualizeați-vă parola</h2>
+<%= form_for @user, url: user_registration_path, html: { method: :put } do |f| %>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation %>
+  <%= f.label :current_password %>
+  <%= f.password_field :current_password %>
+  <%= f.submit "Update Password" %>
+<% end %>
+
+<!-- Add any other elements you want on the dashboard -->
