@@ -51,15 +51,11 @@ end
       end
     end
   end
-
 def destroy
   @post = current_user.posts.find(params[:id]) # Assuming Devise for user authentication
   @post.destroy
   redirect_to posts_path, notice: 'Post was successfully deleted.' # Or another path
 end
-
-
-
   def create_comment
     @post = Post.find(params[:post_id])
     @comment = @post.comments.build(comment_params)
@@ -80,7 +76,6 @@ end
     end
   end
   private
-
   def set_post
     @post = Post.find(params[:id])
   end
