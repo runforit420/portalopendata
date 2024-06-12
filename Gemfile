@@ -73,5 +73,10 @@ group :test do
   gem 'devise'
   gem 'pundit'
   gem 'byebug'
+
+group :production do
+  gem 'rails_12factor'
+  gem 'pg'
+end
  
 end
