@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Charts and Tables</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .card {
+      width: Auto; /* Adjust as needed */
+      height: auto; /* Adjust as needed */
+      margin: 1rem; /* Adjust as needed */
+    }
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    .chart-container {
+      width: Auto; /* Adjust as needed */
+    }
+  </style>
+</head>
+<body>
+<h1>Educatie</h1>
+  <div class="card-container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+    function fetchDataAndCreateTableAndChart(filePath) {
+      // Create a new card
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      // Create a new card body
+      const cardBody = document.createElement('div');
+      cardBody.className = 'card-body';
+      card.appendChild(cardBody);
+
+      // Create a new card title
+      const cardTitle = document.createElement('h5');
+      cardTitle.className = 'card-title';
+      
+      // Extract the file name from the file path
+      const fileName = filePath.split('/').pop().split('.')[0];
+      cardTitle.textContent = fileName;
+
+      cardBody.appendChild(cardTitle); // Append the card title to the card body
+
+      // Create a new chart container
+      const chartContainer = document.createElement('div');
+      chartContainer.className = 'chart-container';
+      cardBody.appendChild(chartContainer);
+
+      // Create a new canvas
+      const canvas = document.createElement('canvas');
+      canvas.className = 'chart';
+      chartContainer.appendChild(canvas);
+
+      fetch(filePath)
+        .then(response => response.json())
+        .then(data => {
+          // Create a new table
+          const table = document.createElement('table');
+          table.className = 'table';
+          const headers = Object.keys(data[0]);
+          const headerRow = document.createElement('tr');
+          headers.forEach(header => {
+            const th = document.createElement('th');
+            th.textContent = header;
+            headerRow.appendChild(th);
+          });
+          table.appendChild(headerRow);
+          data.forEach(item => {
+            const row = document.createElement('tr');
+            headers.forEach(header => {
+              const td = document.createElement('td');
+              td.textContent = item[header];
+              row.appendChild(td);
+            });
+            table.appendChild(row);
+          });
+
+          cardBody.appendChild(table); // Append the table to the card body
+
+          const ctx = canvas.getContext('2d');
+          const datasets = headers.map(header => ({
+            label: header,
+            data: data.map(item => item[header]),
+            backgroundColor: 'rgba(75, 192, 192, 0.2)', // replace with your color
+            borderColor: 'rgba(0, 255, 0, 1)', // replace with your color
+            borderWidth: 5 // replace with your width
+          }));
+          const chart = new Chart(ctx, {
+            type: 'line', // or 'bar', 'pie', etc.
+            data: {
+              labels: data.map((_, i) => i + 1), // replace with your labels
+              datasets
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+        });
+
+      document.querySelector('.card-container').appendChild(card); // Append the card to the card container
+    }
+
+    // List of file paths
+    const filePaths = ['/Unitati_Invatamant_Arad.json', '/Unitati_Invatamant_totale_Arad.json'
+];
+
+    // Call the function for each file path
+    filePaths.forEach(filePath => {
+      fetchDataAndCreateTableAndChart(filePath);
+    });
+  </script>
+</body>
+</html>
