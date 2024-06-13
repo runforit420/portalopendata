@@ -6,7 +6,11 @@ ruby "3.3.0"
 gem "rails", "~> 7.1.3"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails"
+gem "sprockets-rails", '~> 3.5.1'
+gem "sprockets", '~> 3.5.1'
+gem 'concurrent-ruby', '~> 1.2.3' 
+gem 'sassc-rails'
+
 
 # Use sqlite3 as the database for Active Record
 gem 'pg', '~> 1.2'
@@ -45,7 +49,9 @@ gem 'importmap-rails'
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", require: false
+gem "bootsnap", '~> 1.18.3'
+gem "zeitwerk", '~> 2.6.13'
+gem "zeitwerk", '~> 2.6.13'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -73,6 +79,7 @@ group :test do
   gem 'devise'
   gem 'pundit'
   gem 'byebug'
+
 
 group :production do
   gem 'rails_12factor'
