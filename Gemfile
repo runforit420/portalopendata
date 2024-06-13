@@ -6,8 +6,8 @@ ruby "3.3.0"
 gem "rails", "~> 7.1.3"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails", '~> 3.5.1'
-gem "sprockets", '~> 3.5.1'
+gem "sprockets-rails",'~> 3.4'
+gem 'sprockets', '~> 4.0'
 gem 'concurrent-ruby', '~> 1.2.3' 
 gem 'sassc-rails'
 
@@ -84,6 +84,11 @@ group :test do
 group :production do
   gem 'rails_12factor'
   gem 'pg', '~> 1.2'
+  gem "sprockets-rails",'~> 3.4'
+  gem 'sprockets', '~> 4.0'
+  gem 'concurrent-ruby', '~> 1.2.3' 
+  gem 'sassc-rails'
+  gem 'uglifier' 
 end
  
 end
