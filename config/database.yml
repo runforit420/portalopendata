@@ -1,3 +1,5 @@
+# config/database.yml
+
 default: &default
   adapter: postgresql
   encoding: unicode
@@ -7,17 +9,15 @@ development:
   <<: *default
   database: your_app_development
   username: your_db_username
-  # password: your_db_password  # Leave this line out if not needed
+  password: your_db_password
 
 test:
   <<: *default
   database: your_app_test
   username: your_db_username
-  # password: your_db_password  # Leave this line out if not needed
+  password: your_db_password
 
 production:
   <<: *default
   database: your_app_production
-  username: your_db_username
-  password: <%= ENV['YOUR_DB_PASSWORD'] %>  # Ensure this environment variable is set in production
-  host: your_db_host
+  url: <%= ENV['DATABASE_URL'] %>
